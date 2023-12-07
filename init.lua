@@ -11,6 +11,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+	'iibe/gruvbox-high-contrast',
 	{
 		'nvim-telescope/telescope.nvim',
 		tag = '0.1.3',
@@ -35,13 +36,12 @@ require("lazy").setup({
 	'neovim/nvim-lspconfig'
 })
 
-vim.cmd('cd ~/')
-
 vim.g.mapleader = ' '
 
 vim.o.updatetime = 50
-vim.o.colorcolumn = '80'
+vim.o.colorcolumn = '80,120'
 vim.o.termguicolors = true
+vim.cmd [[colorscheme gruvbox-high-contrast]]
 
 -- Files
 vim.o.swapfile = false
@@ -69,10 +69,10 @@ vim.o.shiftwidth = 4
 vim.o.expandtab = false
 vim.o.smartindent = true
 
-vim.o.guifont = 'Consolas:h20'
+vim.o.guifont = 'Fira Code:h14'
 
 -- Neovide
-vim.g.neovide_cursor_animation_length = 0.1
+vim.g.neovide_cursor_animation_length = 0.0
 vim.g.neovide_cursor_trail_size = 0
  
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -101,10 +101,12 @@ vim.keymap.set('n', '<leader>/', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>b', builtin.buffers, {})
 vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
 
+--require('ibl').setup({})
+
 -- Terminal
 require('toggleterm').setup({
 	open_mapping = [[<c-\>]],
-	shell = 'nu'
+	shell = 'fish'
 })
 
 -- Treesitter
@@ -114,7 +116,8 @@ require('nvim-treesitter.configs').setup({
 	    'lua',
 	    'cpp',
 	    'rust',
-	    'markdown'
+	    'markdown',
+		'odin'
 	}
 })
 
@@ -126,6 +129,8 @@ vim.keymap.set('v', '<c-c>', '<esc>"*y')
 local lsp = require('lspconfig')
 lsp.clangd.setup({})
 lsp.rust_analyzer.setup({})
+lsp.ols.setup({})
+lsp.zls.setup({})
 
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -162,4 +167,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, opts)
   end,
 })
-
